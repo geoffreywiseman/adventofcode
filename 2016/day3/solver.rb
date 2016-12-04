@@ -1,27 +1,21 @@
 class Solver 
 
-	def initialize(filename)
-		@filename = filename
+	def initialize(triangles)
+		@triangles = triangles
 		@parsed = 0
 		@valid = 0
 	end
 
 	def solve()
-		File.open(@filename).each do |line|
-			sides = parse(line)
-			validate(sides) unless sides.nil?
+		@triangles.each do |t|
+			@parsed += 1
+			validate(t)
 		end
 		print_results
 	end
 
-	def parse(line)
-		@parsed += 1
-		match = /^\s*(\d+)\s+(\d+)\s+(\d+)$/.match line
-		match.captures.map { |s| s.to_i }
-	end
-
-	def validate(sides)
-		@valid += 1 if valid? sides
+	def validate(triangle)
+		@valid += 1 if valid? triangle
 	end
 
 	def valid?( sides )
