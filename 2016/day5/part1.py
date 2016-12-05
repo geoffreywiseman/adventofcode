@@ -1,17 +1,11 @@
-import hashlib
-
-def hash(prefix, number):
-	hash = hashlib.md5()
-	hash.update(prefix)
-	hash.update(str(number))
-	return hash.hexdigest()
+import day5
 
 def get_password(prefix):
 	password = []
 	index = 0
 
 	while len(password)<8:
-		digest = hash( prefix, index )
+		digest = day5.hash( prefix, index )
 		if digest.startswith("00000"):
 			password.append( digest[5] )
 		index += 1
