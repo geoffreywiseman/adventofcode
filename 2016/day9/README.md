@@ -8,6 +8,8 @@ Looks like I can write a decompressor, then pipe the file into it, character by 
 
 I enjoyed the fact that File and String both support each_char, so my tests (minitest) pass a string and my part1 code passes a file reference, and the decompressor doesn't have to change at all.
 
+It was nice to write tests for this one. I should have done that on previous days, it really is better, as I am reminded when I don't do it. I felt more confident that all was working throughout, made refactorings easier.
+
 ## Part 2
 
 I thought perhaps part 2 would require the output, so I went ahead and generated it in Part 1. But Part 2 really doesn't -- I could have solved part 1 with estimation too, but ... I'll just solve part 2 that way.
