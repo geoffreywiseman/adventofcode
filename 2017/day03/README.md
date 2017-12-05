@@ -10,3 +10,4 @@ I did a little Stack Overflow-ing of the subject, and found some solutions, alth
 
 Phew, this looks like a piece of work on its own. Torn between actually calculating out each value and trying to work out a clever way of deriving it.
 
+Actually turned out not to be too bad. Didn't bother with clever way, just took co-ordinate deriver, stored values in a map, and it's pretty fast. Even without cached compilation, answer is 4s.
