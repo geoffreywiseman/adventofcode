@@ -1,12 +1,9 @@
 import java.io.File
 
-val firewall = mutableMapOf<Int, Int>()
 val linePattern = Regex("(\\d+):\\s*(\\d+)")
-
-fun parseLine(line: String) {
-	val (depth, range) = linePattern.matchEntire(line)!!.destructured
-	firewall[depth.toInt()] = range.toInt()
-}
+val firewall = File("day13-input.txt").readLines()
+		.map { linePattern.matchEntire(it)!!.groupValues }
+		.associate { it[1].toInt() to it[2].toInt() }
 
 fun scannerPosition(picosecond: Int, range: Int): Int {
 	if (range == 1)
@@ -39,7 +36,6 @@ fun firewallPenetrated(delay:Int): Boolean {
 	return true;
 }
 
-File("day13-input.txt").readLines().forEach(this::parseLine)
 
 // Part 1
 val picosecondRange = 0..firewall.keys.max()!!
