@@ -67,9 +67,43 @@ class KnotHash(key: String) {
 	}
 }
 
-val usedBlocks = (0..127).map { "$input-$it" }
+val dimensions = (0..127)
+
+ PART 1
+val usedBlocks = dimensions.map { "$input-$it" }
 		.map { KnotHash(it) }
 		.map { it.toBinaryString() }
 		.map { it.count { it == '1' } }
 		.sum()
 println("Used blocks: $usedBlocks")
+
+// PART 2
+val directions = listOf( Pair(0,1), Pair(0,-1), Pair(1,0), Pair(-1,0) )
+val grid = dimensions.map { "$input-$it" }
+		.map { KnotHash(it) }
+		.map { it.toBinaryString() }
+		.map { it.toCharArray() }
+		.toTypedArray()
+val regions = dimensions.map { row ->
+	dimensions.count { column -> isRegion(row,column) }
+}.sum()
+println("Found $regions region fragments.")
+
+fun isRegion(row:Int, column:Int): Boolean {
+	return if( grid[row][column] == '1') {
+		zeroFill(row,column);
+		true;
+	} else {
+		false;
+	}
+}
+
+fun zeroFill(row: Int, column: Int) {
+	grid[row][column] = 'x'
+	directions.forEach { (rowDelta, columnDelta) ->
+		val adjacentRow = row + rowDelta
+		val adjacentColumn = column + columnDelta
+		if( adjacentRow in dimensions && adjacentColumn in dimensions && grid[adjacentRow][adjacentColumn] == '1' )
+			zeroFill(adjacentRow,adjacentColumn)
+	}
+}

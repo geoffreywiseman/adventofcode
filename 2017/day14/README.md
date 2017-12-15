@@ -18,5 +18,6 @@ Wasn't too bad -- took the opportunity to improve some of my KnotHash code.
 Phew. I don't see any way around turning this into a big-ass array and walking
 around it, marking what we've already examined. Sounds painful, but ...
 
+... it works.
 
  
