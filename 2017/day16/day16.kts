@@ -1,24 +1,23 @@
 import java.io.File
 
-fun getStartingPositions(size: Int): List<Char> {
-	return List(size) { index -> 'a' + index }
+fun getStartingPositions(size: Int): String {
+	return List(size) { index -> 'a' + index }.joinToString("")
 }
 
-fun spin(positions: List<Char>, size: Int): List<Char> {
+fun spin(positions: String, size: Int): String {
 	return positions.takeLast(size) + positions.dropLast(size)
 }
 
-fun exchange(positions: List<Char>, first: Int, second: Int): List<Char> {
-	return List(positions.size) { index ->
-		when (index) {
-			first -> positions[second]
-			second -> positions[first]
-			else -> positions[index]
-		}
+fun exchange(positions: String, first: Int, second: Int): String {
+	return buildString {
+		this.append(positions)
+		val temp = this[first]
+		this[first] = this[second]
+		this[second] = temp
 	}
 }
 
-fun partner(positions: List<Char>, first: Char, second: Char): List<Char> {
+fun partner(positions: String, first: Char, second: Char): String {
 	val firstIndex = positions.indexOf(first)
 	if (firstIndex < 0)
 		throw IllegalArgumentException("Cannot find program with name $first")
@@ -30,13 +29,8 @@ fun partner(positions: List<Char>, first: Char, second: Char): List<Char> {
 	return exchange(positions, firstIndex, secondIndex)
 }
 
-val dance = File("day16-input.txt")
-		.readText()
-		.splitToSequence(",")
-
-var positions = getStartingPositions(16)
-repeat(1_000_000) { time ->
-	positions = dance.fold(positions) { positions, step ->
+fun dance(startingPositions: String, instructions: Sequence<String>): String {
+	return instructions.fold(startingPositions) { positions, step ->
 		when {
 			step[0] == 's' -> spin(positions, step.drop(1).toInt())
 			step[0] == 'x' -> {
@@ -54,9 +48,33 @@ repeat(1_000_000) { time ->
 			else -> throw IllegalArgumentException("Unexpected step: ${step}")
 		}
 	}
-	if( time % 100 == 0 )
-		println( "Finished dance $time times" )
 }
-println("Positions: ${positions.joinToString("")}")
 
+val instructions = File("day16-input.txt")
+		.readText()
+		.splitToSequence(",")
 
+// part 1
+println(dance(getStartingPositions(16), instructions))
+
+// part 2
+fun getEndPosition(rounds: Int, instructions: Sequence<String>): String {
+	var currentPosition = getStartingPositions(16)
+	val history = mutableListOf<String>(currentPosition)
+
+	while (true) {
+		val nextPosition = dance(currentPosition, instructions)
+		val cycleStart = history.indexOf(nextPosition)
+		if (cycleStart != -1) {
+			val remainingRounds = rounds - (history.size - 1)
+			val cycleSize = history.size - cycleStart
+			val equivalentIndex = (remainingRounds-1) % cycleSize + cycleStart
+			return history[equivalentIndex]
+		} else if (history.size == rounds) {
+			return nextPosition
+		}
+		currentPosition = nextPosition
+		history.add(nextPosition)
+	}
+}
+println(getEndPosition(1_000_000, instructions))
