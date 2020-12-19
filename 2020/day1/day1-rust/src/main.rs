@@ -1,6 +1,6 @@
 use std::io::{BufReader, BufRead, Error, ErrorKind};
 use std::fs::File;
-use itertools::iproduct;
+use itertools::Itertools;
 
 fn main() {
     match get_input() {
@@ -10,7 +10,7 @@ fn main() {
 }
 
 fn get_input() -> Result<Vec<i32>, Error> {
-    let file = File::open("input.txt")?;
+    let file = File::open("../input.txt")?;
     let reader = BufReader::new(file);
     reader.lines()
         .map(|r|
@@ -23,15 +23,17 @@ fn get_input() -> Result<Vec<i32>, Error> {
 }
 
 fn find_answer(v: Vec<i32>) {
-    for p in iproduct!(v.clone(), v.clone()) {
-        if p.0 + p.1 == 2020 {
-            println!("{} x {} = {}", p.0, p.1, p.0 * p.1);
+    println!("Part 1:");
+    for p in v.iter().combinations(2) {
+        if p[0] + p[1] == 2020 {
+            println!("\t{} x {} = {}", p[0], p[1], p[0] * p[1]);
         }
     }
 
-    for p in iproduct!(v.clone(), v.clone(), v.clone()) {
-        if p.0 + p.1 + p.2 == 2020 {
-            println!("{} x {} x {} = {}", p.0, p.1, p.2, p.0 * p.1 * p.2);
+    println!("Part 2:");
+    for t in v.iter().combinations(3) {
+        if t[0] + t[1] + t[2] == 2020 {
+            println!("\t{} x {} x {} = {}", t[0], t[1], t[2], t[0] * t[1] * t[2]);
         }
     }
 }
