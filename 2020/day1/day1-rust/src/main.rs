@@ -23,17 +23,17 @@ fn get_input() -> Result<Vec<i32>, Error> {
 }
 
 fn find_answer(v: Vec<i32>) {
-    println!("Part 1:");
-    for p in v.iter().combinations(2) {
-        if p[0] + p[1] == 2020 {
-            println!("\t{} x {} = {}", p[0], p[1], p[0] * p[1]);
-        }
-    }
+    find_answer_part(1, 2, &v);
+    find_answer_part(2, 3, &v);
+}
 
-    println!("Part 2:");
-    for t in v.iter().combinations(3) {
-        if t[0] + t[1] + t[2] == 2020 {
-            println!("\t{} x {} x {} = {}", t[0], t[1], t[2], t[0] * t[1] * t[2]);
-        }
-    }
+fn find_answer_part( part: i8, combo_size: usize, v: &Vec<i32>) {
+    println!("Part {}:", part);
+    v.iter()
+        .combinations(combo_size)
+        .filter(|c| c.iter().copied().sum::<i32>() == 2020)
+        .for_each(|c| {
+            let product = c.iter().copied().product::<i32>();
+            println!("\t{:?} = {}", c, product);
+        });
 }
