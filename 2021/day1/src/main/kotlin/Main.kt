@@ -9,23 +9,21 @@ fun main(args: Array<String>) {
 fun getResourceLines(name: String): Sequence<String> {
     return Thread.currentThread()
         .contextClassLoader
-        .getResourceAsStream(name)
+        .getResourceAsStream(name)!!
         .bufferedReader()
         .lineSequence()
 }
 
 fun part1(lines: Sequence<String>): Int {
     return lines.map(String::toInt)
-        .zipWithNext()
-        .count() {
-            it.second > it.first
-        }
+        .countIncreases()
 }
 
 fun part2(lines: Sequence<String>): Int {
     return lines.map(String::toInt)
         .windowed(3)
         .map { it.sum() }
-        .zipWithNext()
-        .count() { it.second > it.first }
+        .countIncreases()
 }
+
+fun Sequence<Int>.countIncreases(): Int = this.zipWithNext().count() { it.second > it.first }
