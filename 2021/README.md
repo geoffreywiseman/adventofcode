@@ -8,3 +8,4 @@ Days:
 - [Day 4](day4) in Go (golang)
 - [Day 5](day5) in Ruby
 - [Day 6](day6) in Ruby
+- [Day 7](day7) in JavaScript
