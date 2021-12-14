@@ -9,3 +9,5 @@ Days:
 - [Day 5](day5) in Ruby
 - [Day 6](day6) in Ruby
 - [Day 7](day7) in JavaScript
+- [Day 8](day8) in Python
+- [Day 9](day9) in JavaScript
