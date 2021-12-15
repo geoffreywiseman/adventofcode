@@ -3,3 +3,6 @@ xcuserdata/
 .idea
 *.iml
 .DS_Store
+node_modules/
+*.js
+/day10/**/*.js

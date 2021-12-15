@@ -11,3 +11,4 @@ Days:
 - [Day 7](day7) in JavaScript
 - [Day 8](day8) in Python
 - [Day 9](day9) in JavaScript
+- [Day 10](day10) in TypeScript
