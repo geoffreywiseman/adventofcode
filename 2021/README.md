@@ -13,3 +13,4 @@ Days:
 - [Day 9](day9) in JavaScript
 - [Day 10](day10) in TypeScript
 - [Day 11](day11) in Rust
+- [Day 12](day12) in TypeScript
